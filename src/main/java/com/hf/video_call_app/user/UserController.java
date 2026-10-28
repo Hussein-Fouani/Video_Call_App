@@ -18,18 +18,18 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public void RegisterUser(User user) {
+    public void RegisterUser(@RequestBody User user) {
         userService.RegisterUser(user);
     }
 
 
     @PostMapping("/login")
-    public User Login(User user){
+    public User Login(@RequestBody User user){
         return userService.Login(user);
     }
     @PostMapping("/logout")
-    public void LogOut(String email){
-       userService.LogOut(email);
+    public void LogOut(@RequestBody User user){
+       userService.LogOut(user.getEmail());
     }
     @GetMapping
     public List<User> listUsers(){
