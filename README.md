@@ -1,36 +1,46 @@
 # Video Call Application
 
-This Project video call application Video call application that allow you to Connect, collaborate, and enjoy seamless video calls with ease. Includes in-app chat and screen sharing features for enhanced communication.
+A video meeting web app with a Spring Boot user API and a static HTML/JavaScript front end. Video calls, in-call text chat and screen sharing are provided by the [ZEGOCLOUD UIKit](https://www.zegocloud.com/) prebuilt component.
+
+## Tech Stack
+
+- Java 17, Spring Boot 3.1 (Spring Web)
+- Lombok
+- HTML, CSS, vanilla JavaScript
+- ZEGOCLOUD UIKit Prebuilt (video conferencing, text chat, screen sharing)
 
 ## Features
 
-### 🤝 Connect and Collaborate
-With our application, users have the freedom to create meetings and effortlessly connect with others. Collaborate with friends, family, or colleagues, no matter where they are in the world!
+- Register, log in and log out (users are kept in memory, three demo users are created at startup)
+- List registered users with their online/offline status
+- Create a new meeting or join an existing one by room ID
+- In the meeting: camera/microphone toggles, text chat, screen sharing, user list (max 2 participants)
 
-### 💬 In-App Chat
-Enhancing the communication experience, our application comes equipped with an in-app chat feature. Say goodbye to juggling between multiple platforms and keep the conversation flowing smoothly within the app.
+Note: users are stored in an in-memory list, so all data is lost on restart. There is no database and passwords are stored and compared in plain text; this is a learning project, not production code.
 
-### 📺 Share Your Screen
-Need to present something? No problem! We'll demonstrate how to enable screen sharing, making remote presentations and collaboration a breeze.
+## Getting Started
 
-## How to Use
+### Prerequisites
 
-Follow these simple steps to get started with our video call application:
+- JDK 17
 
-1. Sign up on the app.
-2. Create or join meetings.
-3. Enjoy seamless video calls and collaboration.
+### Run
 
-Feel free to reach out if you have any questions or need further assistance. Happy video calling!
+```bash
+git clone https://github.com/Hussein-Fouani/Video_Call_App.git
+cd Video_Call_App
+./mvnw spring-boot:run
+```
 
-## Demo
+Open `http://localhost:8080/login.html`. You can register a new account or log in with a demo user, e.g. `hsen@gmail.com` / `AAA`.
 
-See Demo Directory...
+To use your own ZEGOCLOUD project, replace `appID` and `serverSecret` in `src/main/resources/static/videocall.html`.
 
-## Contributing
+## API Endpoints
 
-We welcome contributions!
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+| Method | Path | Body | Description |
+|--------|------|------|-------------|
+| POST | `/api/v1/users` | `{ "username", "email", "password" }` | Register a user |
+| POST | `/api/v1/users/login` | `{ "email", "password" }` | Log in, returns the user |
+| POST | `/api/v1/users/logout` | `{ "email" }` | Mark the user offline |
+| GET | `/api/v1/users` | | List all users |
