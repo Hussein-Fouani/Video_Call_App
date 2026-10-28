@@ -1,16 +1,18 @@
-function handleLogin(event) {
+function handleRegistration(event) {
     event.preventDefault();
 
     // Get user input
+    const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     const user = {
+        username: username,
         email: email,
         password: password
     };
 
-    fetch('http://localhost:8080/api/v1/users/login', {
+    fetch('http://localhost:8080/api/v1/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -18,12 +20,10 @@ function handleLogin(event) {
         body: JSON.stringify(user)
     }).then(response => {
         if (!response.ok) {
-            alert('Login and / or password is incorrect');
+            alert('Registration failed');
+            return;
         }
-        return response.json();
-    }).then((response) => {
-        localStorage.setItem('connectedUser', JSON.stringify(response));
-        window.location.href = 'index.html'
+        window.location.href = 'login.html'
     }).catch(error => {
         console.error('POST request error', error);
     });
@@ -31,5 +31,5 @@ function handleLogin(event) {
 
 
 
-const loginForm = document.getElementById("loginForm");
-loginForm.addEventListener("submit", handleLogin);
+const registrationForm = document.getElementById("registrationForm");
+registrationForm.addEventListener("submit", handleRegistration);
